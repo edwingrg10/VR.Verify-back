@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http.Features;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using VF.Verify.Infrastructure.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = 104857600;
 });
 
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

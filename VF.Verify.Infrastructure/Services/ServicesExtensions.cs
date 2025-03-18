@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Infrastructure.Services;
+using Microsoft.Extensions.DependencyInjection;
 using VF.Verify.Domain.Interfaces.Services;
 
 namespace VF.Verify.Infrastructure.Services
@@ -11,6 +12,7 @@ namespace VF.Verify.Infrastructure.Services
             services.AddTransient<ISqlCommandService, SqlCommandServices>();
             services.AddTransient<IExecuteStoredProcedureService, ExecuteStoredProcedureService>();
             services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IExcelParserService, ExcelParserService>();
             return services;
         }
 

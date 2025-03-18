@@ -11,6 +11,8 @@ namespace VF.Verify.Infrastructure.UseCases
         {
             services.AddSingleton(configuration);
             services.AddTransient<IUserUseCase, UserUseCase>();
+            services.AddTransient<IExcelUseCase, ExcelUseCase>();
+            services.AddTransient<IRuleUseCase, RuleUseCase>();
             return services;
         }
 

@@ -15,6 +15,8 @@ namespace VF.Verify.Infrastructure.Repository
             services.AddSingleton(configuration);
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IExcelRepository, ExcelRepository>();
+            services.AddTransient<IRuleRepository, RuleRepository>();
             return services;
         }
 
