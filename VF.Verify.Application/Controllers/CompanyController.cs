@@ -14,7 +14,10 @@ public class CompanyController : ControllerBase
     }
 
     [HttpGet]
-    public Task<ResponseDTO> GetCompanies() => _companyUseCase.GetCompaniesAsync();
+    public async Task<ResponseDTO> GetCompanies() 
+    {
+        return await _companyUseCase.GetCompaniesAsync();
+    }
 
     [HttpGet("{id}")]
     public async Task<ResponseDTO> GetCompanyById(int id) 
@@ -36,5 +39,8 @@ public class CompanyController : ControllerBase
 
 
     [HttpDelete("{id}")]
-    public Task<ResponseDTO> DeleteCompany(int id) => _companyUseCase.DeleteCompanyAsync(id);
+    public async Task<ResponseDTO> DeleteCompany(int id) 
+    {
+        return await _companyUseCase.DeleteCompanyAsync(id);
+    }
 }
