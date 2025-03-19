@@ -6,5 +6,9 @@ namespace VF.Verify.Domain.Interfaces.Repository.Repositories
     {
         Task<ResponseDTO> GetUsers();
 
+        Task<ResponseDTO> GetUserById(int userId);
+
+        Task<ResponseDTO> CreateOrUpdateUser(UserDto user);
+
     }
 }

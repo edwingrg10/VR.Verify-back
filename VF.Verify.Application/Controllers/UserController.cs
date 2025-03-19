@@ -17,5 +17,11 @@ namespace VF.Verify.Application.Controllers
             return await HandleResponses.HandleResponse(() => _userUseCase.GetUsers(), _logService, System.Reflection.MethodBase.GetCurrentMethod().Name);
         }
 
+        [HttpGet("/GetUserById")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            return await HandleResponses.HandleResponse(() => _userUseCase.GetUserById(id), _logService, System.Reflection.MethodBase.GetCurrentMethod().Name);
+        }
+
     }
 }

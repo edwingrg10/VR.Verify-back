@@ -11,6 +11,18 @@ namespace VF.Verify.Infrastructure.UseCases
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ILogService _logService = logService;
 
+        public async Task<ResponseDTO> GetUserById(int userId)
+        {
+            try
+            {
+                return await _userRepository.GetUserById(userId);
+            }
+            catch (Exception ex)
+            {
+                return ExceptionHelper.HandleException(_logService, System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+            }
+        }
+
         public async Task<ResponseDTO> GetUsers()
         {
             try

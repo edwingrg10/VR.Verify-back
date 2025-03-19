@@ -13,6 +13,7 @@ namespace VF.Verify.Infrastructure.Services
             services.AddTransient<IExecuteStoredProcedureService, ExecuteStoredProcedureService>();
             services.AddTransient<ILogService, LogService>();
             services.AddTransient<IExcelParserService, ExcelParserService>();
+            services.AddTransient<ICompanyService, CompanyService>();
             return services;
         }
 

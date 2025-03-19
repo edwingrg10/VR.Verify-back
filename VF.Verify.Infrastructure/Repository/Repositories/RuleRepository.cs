@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Data.SqlClient;
-using OfficeOpenXml;
-using System.ComponentModel.Design;
 using System.Data;
 using System.Diagnostics;
 using VF.Verify.Domain.DTOs;

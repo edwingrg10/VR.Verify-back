@@ -17,6 +17,10 @@ namespace VF.Verify.Infrastructure.Repository
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IExcelRepository, ExcelRepository>();
             services.AddTransient<IRuleRepository, RuleRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IDistribuitorRepository, DistribuitorRepository>();
+            services.AddTransient<IContryRepository, CountryRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
             return services;
         }
 
