@@ -1,14 +1,11 @@
 ﻿using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Entities;
 
-namespace VF.Verify.Domain.Interfaces.Repository.Repositories
+public interface ICompanyRepository
 {
-    public interface ICompanyRepository
-    {
-        Task<List<Company>> GetCompaniesAsync();
-        Task<Company> GetCompanyByIdAsync(int id);
-        Task<Company> CreateCompanyAsync(Company company);
-        Task<Company> UpdateCompanyAsync(Company companyDto);
-        Task<bool> DeleteCompanyAsync(int id);
-    }
+    Task<ResponseDTO> GetCompaniesAsync();
+    Task<ResponseDTO> GetCompanyByIdAsync(int id);
+    Task<ResponseDTO> CreateCompanyAsync(CreateCompanyDTO companyDto);
+    Task<ResponseDTO> UpdateCompanyAsync(UpdateCompanyDTO companyDto);
+    Task<ResponseDTO> DeleteCompanyAsync(int id);
 }
