@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VF.Verify.Domain.Interfaces.UseCases;
 
 [ApiController]
@@ -12,6 +13,7 @@ public class ExportController : ControllerBase
         _excelUseCase = excelUseCase;
     }
 
+    [Authorize]
     [HttpGet("generate-template/{companyId}/{countryId}")]
     public async Task<IActionResult> GenerateExcelTemplate(int companyId, int countryId)
     {

@@ -21,6 +21,7 @@ namespace VF.Verify.Infrastructure.Repository
             services.AddTransient<IDistribuitorRepository, DistribuitorRepository>();
             services.AddTransient<IContryRepository, CountryRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<ICompanyCountryRepository, CompanyCountryRepository>();
             return services;
         }
 

@@ -28,5 +28,7 @@ namespace VF.Verify.Domain.Entities
         [Column("is_active")]
         public bool IsActive { get; set; } = true;
         public Distributor Distributor { get; set; } // relacion con distribuitor
+        public ICollection<CompanyCountry> CompanyCountries { get; set; } = new List<CompanyCountry>(); // relacion uno a muchos con CompanyCountry
+
     }
 }

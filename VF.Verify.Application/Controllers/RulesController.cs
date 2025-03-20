@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Interfaces.UseCases;
 
@@ -15,6 +16,7 @@ namespace VF.Verify.Application.Controllers
             _ruleUseCase = ruleUseCase;
         }
 
+        [Authorize]
         [HttpPost("upload-rules/{companyCountryId}")]
         public async Task<IActionResult> UploadRules(int companyCountryId, IFormFile excelFile)
         {

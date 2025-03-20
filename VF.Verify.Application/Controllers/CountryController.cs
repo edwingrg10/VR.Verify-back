@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VF.Verify.Domain.Entities;
 using VF.Verify.Domain.Interfaces.UseCases;
 
@@ -15,6 +16,7 @@ namespace VF.Verify.Application.Controllers
             _countryUseCase = countryUseCase;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetCountries()
         {
@@ -22,6 +24,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCountryById(int id)
         {
@@ -29,6 +32,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateCountry(Country country)
         {
@@ -36,6 +40,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateCountry([FromBody] Country country)
         {
@@ -43,6 +48,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountry(int id)
         {

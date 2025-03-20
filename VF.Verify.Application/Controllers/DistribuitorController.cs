@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VF.Verify.Application.Interfaces;
 using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Entities;
@@ -17,6 +18,7 @@ namespace VF.Verify.Application.Controllers
             _distribuitorUseCase = distribuitorUseCase;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetDistribuitors()
         {
@@ -24,6 +26,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDistribuitorById(int id)
         {
@@ -31,6 +34,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateDistributor(Distributor distributor)
         {
@@ -38,6 +42,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateRole([FromBody] Distributor distributor)
         {
@@ -45,6 +50,7 @@ namespace VF.Verify.Application.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDistributor(int id)
         {

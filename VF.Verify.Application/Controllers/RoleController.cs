@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VF.Verify.Application.Interfaces;
 using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Entities;
@@ -16,6 +17,7 @@ namespace VF.Verify.API.Controllers
             _roleUseCase = roleUseCase;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetRoles()
         {
@@ -23,6 +25,7 @@ namespace VF.Verify.API.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoleById(int id)
         {
@@ -30,6 +33,7 @@ namespace VF.Verify.API.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateRole([FromBody] string roleName)
         {
@@ -42,6 +46,7 @@ namespace VF.Verify.API.Controllers
             return response.IsSuccess ? CreatedAtAction(nameof(GetRoleById), new { id = ((Role)response.Data).Id }, response) : BadRequest(response);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateRole([FromBody] Role roleDto)
         {
@@ -49,6 +54,7 @@ namespace VF.Verify.API.Controllers
             return response.IsSuccess ? Ok(response) : NotFound(response);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {
