@@ -18,7 +18,7 @@ namespace VF.Verify.Domain.Entities
         [Column("is_required")]
         public bool IsRequired { get; set; }
 
-        public virtual ConsultationCriteria ConsultationCriteria { get; set; }
+        public virtual ConsultationCriteria? ConsultationCriteria { get; set; }
         public virtual Source Source { get; set; }
         public virtual Field Field { get; set; }
     }

@@ -35,8 +35,10 @@ namespace VF.Verify.Application.Controllers
             return result != null ? Ok(result) : NotFound();
         }
 
-        [HttpGet("verification-fields/{criteriaId}/{sourceId}")]
-        public async Task<IActionResult> GetVerificationFields(int criteriaId, int sourceId)
+        [HttpGet("verification-fields/{sourceId}")]
+        public async Task<IActionResult> GetVerificationFields(
+            [FromQuery] int? criteriaId,
+            int sourceId)
         {
             var result = await _profileUseCase.GetVerificationFields(criteriaId, sourceId);
             return result.Any() ? Ok(result) : NotFound();

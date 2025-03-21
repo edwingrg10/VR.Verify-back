@@ -53,22 +53,29 @@ namespace VF.Verify.Infrastructure.UseCases
             {
                 CriteriaId = criteria.Id,
                 CriteriaName = criteria.Name,
-                Fields = criteria.VerificationFields.Select(vf => new FieldDto(
-                    vf.Field.Id,
-                    vf.Field.Name,
-                    vf.Field.Type.ToString()
-                )).ToList()
+                Fields = criteria.VerificationFields
+                    .Where(vf => vf.Field != null)
+                    .Select(vf => new FieldDto(
+                        vf.Field?.Id ?? 0,
+                        vf.Field?.Name ?? "Campo desconocido",
+                        vf.Field?.Type.ToString() ?? "TEXT"
+                    ))
+                    .ToList()
             };
         }
 
-        public async Task<List<FieldDto>> GetVerificationFields(int criteriaId, int sourceId)
+        public async Task<List<FieldDto>> GetVerificationFields(int? criteriaId, int sourceId)
         {
             var verificationFields = await _verificationRepo.GetByCriteriaAndSourceAsync(criteriaId, sourceId);
-            return verificationFields.Select(vf => new FieldDto(
-                vf.Field.Id,
-                vf.Field.Name,
-                vf.Field.Type.ToString()
-            )).ToList();
+
+            return verificationFields
+                .Where(vf => vf.Field != null)
+                .Select(vf => new FieldDto(
+                    vf.Field.Id,
+                    vf.Field.Name,
+                    vf.Field.Type.ToString()
+                ))
+                .ToList();
         }
     }
 }

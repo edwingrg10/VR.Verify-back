@@ -26,6 +26,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<Entity> Entities { get; set; }
     public DbSet<ExtractionMethod> ExtractionMethods { get; set; }
     public DbSet<Source> Sources { get; set; }
+
+    public DbSet<Rule> Rules { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Role>().ToTable("role");
@@ -77,12 +80,12 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Profile>(entity =>
         {
-            entity.ToTable("profile"); // Nombre exacto de la tabla en BD
+            entity.ToTable("profile");
             entity.HasKey(p => p.Id);
 
             entity.Property(p => p.Name)
                 .HasMaxLength(255)
-                .HasColumnName("name"); // Si el nombre en BD es diferente
+                .HasColumnName("name");
         });
 
         modelBuilder.Entity<ProfileSource>(entity =>
@@ -121,7 +124,6 @@ public class ApplicationDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255);
 
-            // Relaciones con llaves foraneas
             entity.HasOne(u => u.Role)
                 .WithMany()
                 .HasForeignKey(u => u.RolId)
@@ -140,27 +142,16 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<VerificationField>(entity =>
         {
-
             entity.ToTable("verification_fields");
+            entity.Property(vf => vf.ConsultationCriteriaId).IsRequired(false);
 
-            // Clave primaria
             entity.HasKey(vf => vf.Id);
 
-            // Relaciones
             entity.HasOne(vf => vf.ConsultationCriteria)
                 .WithMany(cc => cc.VerificationFields)
                 .HasForeignKey(vf => vf.ConsultationCriteriaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(vf => vf.Source)
-                .WithMany(s => s.VerificationFields)
-                .HasForeignKey(vf => vf.SourceId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne(vf => vf.Field)
-                .WithMany(f => f.VerificationFields)
-                .HasForeignKey(vf => vf.FieldId)
-                .OnDelete(DeleteBehavior.Cascade);
         });
 
         // Configuración para FieldType
@@ -170,16 +161,19 @@ public class ApplicationDbContext : DbContext
             entity.Property(f => f.Type)
                 .HasConversion<string>()
                 .HasColumnName("type");
+
+            entity.Property(f => f.Metadata)
+            .IsRequired(false);
         });
 
         // Configuración para ExtractionMethodType
         modelBuilder.Entity<ExtractionMethod>(entity =>
         {
-            entity.ToTable("extraction_method"); // Nombre real de la tabla en BD
+            entity.ToTable("extraction_method");
             entity.HasKey(em => em.Id);
 
             entity.Property(em => em.Type)
-                .HasConversion<string>() // Convertir enum a string
+                .HasConversion<string>()
                 .HasColumnName("type")
                 .HasMaxLength(10);
 
@@ -191,7 +185,7 @@ public class ApplicationDbContext : DbContext
         // Configuración para ConsultationCriteria
         modelBuilder.Entity<ConsultationCriteria>(entity =>
         {
-            entity.ToTable("ConsultationCriterias"); // Nombre de tabla explícito
+            entity.ToTable("consultation_criteria");
 
             entity.HasKey(cc => cc.Id);
 
@@ -203,17 +197,6 @@ public class ApplicationDbContext : DbContext
             entity.HasMany(cc => cc.VerificationFields)
                 .WithOne(vf => vf.ConsultationCriteria)
                 .HasForeignKey(vf => vf.ConsultationCriteriaId);
-        });
-
-        // Configuración para VerificationField
-        modelBuilder.Entity<VerificationField>(entity =>
-        {
-            entity.ToTable("VerificationFields");
-
-            entity.HasOne(vf => vf.Field)
-                .WithMany(f => f.VerificationFields)
-                .HasForeignKey(vf => vf.FieldId)
-                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Source>(entity =>
@@ -275,6 +258,21 @@ public class ApplicationDbContext : DbContext
             entity.HasOne(s => s.ExtractionMethod)
                 .WithMany(em => em.Sources)
                 .HasForeignKey(s => s.ExtractionMethodId);
+
+            entity.HasMany(s => s.Rules)
+                .WithOne(r => r.Source)
+                .HasForeignKey(r => r.SourceId);
+        });
+
+        modelBuilder.Entity<Rule>(entity =>
+        {
+            entity.ToTable("rule");
+            entity.HasKey(r => r.Id);
+
+            entity.HasOne(r => r.Source)
+                .WithMany(s => s.Rules)
+                .HasForeignKey(r => r.SourceId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
 

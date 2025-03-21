@@ -12,7 +12,7 @@ namespace VF.Verify.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public FieldType Type { get; set; }
-        public string Metadata { get; set; } // JSON
+        public string? Metadata { get; set; } // JSON
 
         // Navigation Properties
         public virtual ICollection<ConsultationCriteriaFields> CriteriaFields { get; set; }

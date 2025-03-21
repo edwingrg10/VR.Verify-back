@@ -13,12 +13,21 @@ namespace VF.Verify.Infrastructure.Repository.Repositories
             _context = context;
         }
 
-        public async Task<List<VerificationField>> GetByCriteriaAndSourceAsync(int criteriaId, int sourceId)
+        public async Task<List<VerificationField>> GetByCriteriaAndSourceAsync(int? criteriaId, int sourceId)
         {
-            return await _context.VerificationFields
+            var query = _context.VerificationFields
                 .Include(vf => vf.Field)
-                .Where(vf => vf.ConsultationCriteriaId == criteriaId && vf.SourceId == sourceId)
-                .ToListAsync();
+                .Where(vf => vf.SourceId == sourceId);
+                        if (criteriaId == null)
+                        {
+                            query = query.Where(vf => vf.ConsultationCriteriaId == null);
+                        }
+                        else
+                        {
+                            query = query.Where(vf => vf.ConsultationCriteriaId == criteriaId);
+                        }
+
+            return await query.ToListAsync();
         }
     }
 }
