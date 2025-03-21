@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace VF.Verify.Domain.DTOs
 {
-    public record FieldDto(int? Id, string Name, string Type);
+    public record FieldDto(int? Id, string Name, string Type, string? metaData);
 
 }

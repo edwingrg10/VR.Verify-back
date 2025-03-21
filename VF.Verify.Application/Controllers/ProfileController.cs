@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Interfaces.UseCases;
 
 namespace VF.Verify.Application.Controllers
@@ -17,22 +18,84 @@ namespace VF.Verify.Application.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProfiles()
         {
-            var profiles = await _profileUseCase.GetAllProfiles();
-            return Ok(profiles);
+            try
+            {
+                var profiles = await _profileUseCase.GetAllProfiles();
+                return Ok(new ResponseDTO
+                {
+                    IsSuccess = true,
+                    Message = "Perfiles obtenidos exitosamente",
+                    Data = profiles
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error: {ex.Message}"
+                });
+            }
         }
 
         [HttpGet("{id}/details")]
         public async Task<IActionResult> GetProfileDetails(int id)
         {
-            var result = await _profileUseCase.GetProfileDetails(id);
-            return result != null ? Ok(result) : NotFound();
+            try
+            {
+                var result = await _profileUseCase.GetProfileDetails(id);
+
+                return result != null
+                    ? Ok(new ResponseDTO
+                    {
+                        IsSuccess = true,
+                        Message = "Detalles del perfil obtenidos",
+                        Data = result
+                    })
+                    : NotFound(new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "Perfil no encontrado"
+                    });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error: {ex.Message}"
+                });
+            }
         }
 
         [HttpGet("criteria/{criteriaId}")]
         public async Task<IActionResult> GetCriteriaData(int criteriaId)
         {
-            var result = await _profileUseCase.GetCriteriaData(criteriaId);
-            return result != null ? Ok(result) : NotFound();
+            try
+            {
+                var result = await _profileUseCase.GetCriteriaData(criteriaId);
+
+                return result != null
+                    ? Ok(new ResponseDTO
+                    {
+                        IsSuccess = true,
+                        Message = "Criterio obtenido exitosamente",
+                        Data = result
+                    })
+                    : NotFound(new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "Criterio no encontrado"
+                    });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error: {ex.Message}"
+                });
+            }
         }
 
         [HttpGet("verification-fields/{sourceId}")]
@@ -40,8 +103,31 @@ namespace VF.Verify.Application.Controllers
             [FromQuery] int? criteriaId,
             int sourceId)
         {
-            var result = await _profileUseCase.GetVerificationFields(criteriaId, sourceId);
-            return result.Any() ? Ok(result) : NotFound();
+            try
+            {
+                var result = await _profileUseCase.GetVerificationFields(criteriaId, sourceId);
+
+                return result.Any()
+                    ? Ok(new ResponseDTO
+                    {
+                        IsSuccess = true,
+                        Message = "Campos de verificación obtenidos",
+                        Data = result
+                    })
+                    : NotFound(new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "No se encontraron campos de verificación"
+                    });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error: {ex.Message}"
+                });
+            }
         }
     }
 }

@@ -58,7 +58,8 @@ namespace VF.Verify.Infrastructure.UseCases
                     .Select(vf => new FieldDto(
                         vf.Field?.Id ?? 0,
                         vf.Field?.Name ?? "Campo desconocido",
-                        vf.Field?.Type.ToString() ?? "TEXT"
+                        vf.Field?.Type.ToString() ?? "TEXT",
+                        vf.Field?.Metadata?.ToString() ?? null
                     ))
                     .ToList()
             };
@@ -73,7 +74,8 @@ namespace VF.Verify.Infrastructure.UseCases
                 .Select(vf => new FieldDto(
                     vf.Field.Id,
                     vf.Field.Name,
-                    vf.Field.Type.ToString()
+                    vf.Field.Type.ToString(),
+                    vf.Field?.Metadata?.ToString() ?? null
                 ))
                 .ToList();
         }
