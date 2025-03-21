@@ -20,6 +20,7 @@ namespace VF.Verify.Infrastructure.UseCases
             services.AddTransient<ICountryUseCase, CountryUseCase>();
             services.AddTransient<ICompanyUseCase, CompanyUseCase>();
             services.AddTransient<ICompanyCountryUseCase, CompanyCountryUseCase>();
+            services.AddTransient<IProfileUseCase, ProfileUseCase>();
             return services;
         }
 
