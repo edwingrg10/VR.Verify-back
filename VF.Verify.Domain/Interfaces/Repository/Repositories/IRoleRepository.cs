@@ -5,9 +5,12 @@ namespace VF.Verify.Domain.Interfaces.Repository.Repositories;
 
 public interface IRoleRepository
 {
-    Task<ResponseDTO> GetRolesAsync();
-    Task<ResponseDTO> GetRoleByIdAsync(int id);
-    Task<ResponseDTO> CreateRoleAsync(Role role);
-    Task<ResponseDTO> UpdateRoleAsync(Role role);
-    Task<ResponseDTO> DeleteRoleAsync(int id);
+    Task<ResponseDTO> GetAllRoles();
+    Task<ResponseDTO> GetRoleById(int id);
+    Task<ResponseDTO> CreateRole(Role role);
+    Task<ResponseDTO> UpdateRole(Role role);
+    Task<ResponseDTO> DeleteRole(int id);
+    Task<ResponseDTO> AssignPermissions(int roleId, List<int> permissionIds);
+    Task<ResponseDTO> GetRolePermissions(int roleId);
+
 }

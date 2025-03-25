@@ -29,6 +29,10 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Rule> Rules { get; set; }
 
+    public DbSet<RolePermission> RolePermissions { get; set; }
+
+    public DbSet<Permission> Permissions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Role>().ToTable("role");
@@ -273,6 +277,26 @@ public class ApplicationDbContext : DbContext
                 .WithMany(s => s.Rules)
                 .HasForeignKey(r => r.SourceId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Permission>(entity =>
+        {
+            entity.ToTable("permission");
+            entity.HasKey(p => p.Id);
+        });
+
+        modelBuilder.Entity<RolePermission>(entity =>
+        {
+            entity.ToTable("role_permission");
+            entity.HasKey(rp => rp.Id);
+
+            entity.HasOne(rp => rp.Role)
+                .WithMany(r => r.RolePermissions)
+                .HasForeignKey(rp => rp.RoleId);
+
+            entity.HasOne(rp => rp.Permission)
+                .WithMany(p => p.RolePermissions)
+                .HasForeignKey(rp => rp.PermissionId);
         });
 
 

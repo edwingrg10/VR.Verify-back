@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VF.Verify.Application.Interfaces;
-using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Entities;
 using VF.Verify.Domain.Interfaces.UseCases;
 

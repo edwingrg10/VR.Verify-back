@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VF.Verify.Application.Interfaces;
-using VF.Verify.Application.UseCases;
 using VF.Verify.Domain.Interfaces.UseCases;
 
 namespace VF.Verify.Infrastructure.UseCases
@@ -21,6 +19,7 @@ namespace VF.Verify.Infrastructure.UseCases
             services.AddTransient<ICompanyUseCase, CompanyUseCase>();
             services.AddTransient<ICompanyCountryUseCase, CompanyCountryUseCase>();
             services.AddTransient<IProfileUseCase, ProfileUseCase>();
+            services.AddTransient<IPermissionUseCase, PermissionUseCase>();
             return services;
         }
 

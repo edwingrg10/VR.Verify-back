@@ -42,7 +42,6 @@ namespace VF.Verify.Application.Controllers
         /// <summary>
         /// Crear un nuevo usuario
         /// </summary>
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserDTO userDto)
         {

@@ -25,6 +25,7 @@ namespace VF.Verify.Infrastructure.Repository
             services.AddTransient<IConsultationCriteriaRepository, ConsultationCriteriaRepository>();
             services.AddTransient<IProfileRepository, ProfileRepository>();
             services.AddTransient<IVerificationFieldsRepository, VerificationFieldsRepository>();
+            services.AddTransient<IPermissionRepository, PermissionRepository>();
             return services;
         }
 
