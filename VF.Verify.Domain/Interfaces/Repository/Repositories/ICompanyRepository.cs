@@ -1,5 +1,4 @@
 ﻿using VF.Verify.Domain.DTOs;
-using VF.Verify.Domain.Entities;
 
 public interface ICompanyRepository
 {

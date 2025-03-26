@@ -23,18 +23,62 @@ namespace VF.Verify.Infrastructure.Repository.Repositories
 
         public async Task<ResponseDTO> GetUsersAsync()
         {
-            var users = await _context.Users.ToListAsync();
-            return new ResponseDTO { IsSuccess = true, Message = "Usuarios obtenidos", Data = users };
+            var users = await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Distributor)
+                .Include(u => u.CompanyCountry)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Email,
+                    u.Password,
+                    Rol = new { u.Role.Id, u.Role.Name },
+                    Distributor = new { u.Distributor.Id, u.Distributor.Name },
+                    CompanyCountry = new { u.CompanyCountry.Id }
+                })
+                .ToListAsync();
+
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                Message = "Usuarios obtenidos",
+                Data = users
+            };
         }
 
         public async Task<ResponseDTO> GetUserByIdAsync(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(u => u.Role)          
+                .Include(u => u.Distributor)  
+                .Include(u => u.CompanyCountry) 
+                .Where(u => u.Id == id)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Email,
+                    u.Password,
+                    Rol = new { u.Role.Id, u.Role.Name },
+                    Distributor = new { u.Distributor.Id, u.Distributor.Name },
+                    CompanyCountry = new { u.CompanyCountry.Id }
+                })
+                .FirstOrDefaultAsync();
+
             if (user == null)
             {
-                return new ResponseDTO { IsSuccess = false, Message = "Usuario no encontrado" };
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "Usuario no encontrado"
+                };
             }
-            return new ResponseDTO { IsSuccess = true, Message = "Usuario encontrado", Data = user };
+
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                Message = "Usuario encontrado",
+                Data = user
+            };
         }
 
         public async Task<ResponseDTO> CreateUserAsync(UserDTO userDto)
@@ -111,16 +155,46 @@ namespace VF.Verify.Infrastructure.Repository.Repositories
 
         public async Task<ResponseDTO> GetUserByEmailAsync(string email)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Distributor)
+                .Include(u => u.CompanyCountry)
+                .Where(u => u.Email == email)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Email,
+                    u.Password,
+                    Rol = new { u.Role.Id, u.Role.Name },
+                    Distributor = new { u.Distributor.Id, u.Distributor.Name },
+                    CompanyCountry = new { u.CompanyCountry.Id }
+                })
+                .FirstOrDefaultAsync();
+
             if (user == null)
             {
-                return new ResponseDTO { IsSuccess = false, Message = "Usuario no encontrado" };
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "Usuario no encontrado"
+                };
             }
-            return new ResponseDTO { IsSuccess = true, Message = "Usuario encontrado", Data = user };
+
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                Message = "Usuario encontrado",
+                Data = user
+            };
         }
         public async Task<ResponseDTO> AuthenticateUserAsync(string email, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Distributor)
+                .Include(u => u.CompanyCountry)
+                .FirstOrDefaultAsync(u => u.Email == email);
+
             if (user == null)
             {
                 return new ResponseDTO { IsSuccess = false, Message = "Usuario o contraseña incorrectos" };
@@ -144,7 +218,9 @@ namespace VF.Verify.Infrastructure.Repository.Repositories
                     {
                         Id = user.Id,
                         Email = user.Email,
-                        Role = user.RolId
+                        Role = new { user.Role.Id, user.Role.Name },
+                        Distributor = new { user.Distributor.Id, user.Distributor.Name },
+                        CompanyCountry = new { user.CompanyCountry.Id }
                     }
                 }
             };

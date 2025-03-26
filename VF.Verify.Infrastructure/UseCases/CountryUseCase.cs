@@ -1,8 +1,7 @@
 ﻿using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Entities;
-using VF.Verify.Domain.Interfaces.UseCases;
 using VF.Verify.Domain.Interfaces.Repository.Repositories;
-using VF.Verify.Infrastructure.Repository.Repositories;
+using VF.Verify.Domain.Interfaces.UseCases;
 
 namespace VF.Verify.Infrastructure.UseCases
 {

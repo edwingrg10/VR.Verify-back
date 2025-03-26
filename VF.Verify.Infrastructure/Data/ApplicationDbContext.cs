@@ -97,7 +97,6 @@ public class ApplicationDbContext : DbContext
             entity.ToTable("profile_source");
             entity.HasKey(ps => ps.Id);
 
-            // Relaciones
             entity.HasOne(ps => ps.Profile)
                 .WithMany(p => p.ProfileSources)
                 .HasForeignKey(ps => ps.ProfileId)
@@ -158,7 +157,6 @@ public class ApplicationDbContext : DbContext
 
         });
 
-        // Configuración para FieldType
         modelBuilder.Entity<Field>(entity =>
         {
             entity.ToTable("field");
@@ -170,7 +168,6 @@ public class ApplicationDbContext : DbContext
             .IsRequired(false);
         });
 
-        // Configuración para ExtractionMethodType
         modelBuilder.Entity<ExtractionMethod>(entity =>
         {
             entity.ToTable("extraction_method");
@@ -186,7 +183,6 @@ public class ApplicationDbContext : DbContext
                 .HasMaxLength(255);
         });
 
-        // Configuración para ConsultationCriteria
         modelBuilder.Entity<ConsultationCriteria>(entity =>
         {
             entity.ToTable("consultation_criteria");

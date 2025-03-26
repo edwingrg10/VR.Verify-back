@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VF.Verify.Domain.DTOs;
-using VF.Verify.Domain.Entities;
 
 [ApiController]
 [Route("api/[controller]")]

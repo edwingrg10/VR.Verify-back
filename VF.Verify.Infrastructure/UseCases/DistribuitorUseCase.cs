@@ -1,14 +1,7 @@
-﻿using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VF.Verify.Domain.DTOs;
+﻿using VF.Verify.Domain.DTOs;
 using VF.Verify.Domain.Entities;
 using VF.Verify.Domain.Interfaces.Repository.Repositories;
 using VF.Verify.Domain.Interfaces.UseCases;
-using VF.Verify.Infrastructure.Repository.Repositories;
 
 namespace VF.Verify.Infrastructure.UseCases
 {
